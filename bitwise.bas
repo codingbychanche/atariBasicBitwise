@@ -1,0 +1,64 @@
+0 REM *******************************
+1 REM 8 BIT BITWISE LOGICAL FOR BASIC
+2 REM LSB-------MSB
+3 REM A$=> OP1  B$=> OP2
+4 REM RESULT OF OP IS STORED TO R$
+5 REM R CONTAINS THE INT VAL OF R$
+6 REM A AND B CONTAIN INITIAL VALS
+7 REM COPY FROM HERE AND PASTE INTO
+8 REM THE A8 BASIC EDITOR....
+9 REM *******************************
+10 DIM A$(8):DIM B$(8)
+11 DIM R$(8)
+15 OR=100:AND=103:XOR=105:TOBIN=1091:TOINT=505
+16 REM ******************************
+17 REM DEMO
+18 REM ******************************
+40 A=16
+41 B=255
+42 GOSUB TOBIN
+43 ? "A=";A$;"  B=";B$
+44 FOR I=1 TO 8
+45 A=VAL(A$(I,I)):B=VAL(B$(I,I))
+46 GOSUB AND
+47 R$(I,I)=STR$(R)
+48 NEXT I
+80 ? "A & B=";R$
+81 GOSUB TOINT
+82 ? "R=";R
+90 END
+91 REM ******************************
+98 REM LIB OF LOGICAL OPS
+99 REM ******************************
+100 R=(A>B OR A<B OR A=B):RETURN :REM OR
+103 R=(A=B):RETURN :REM AND
+105 R=((A=1 AND B=0) OR (A=0 AND B=1)):RETURN :REM XOR
+106 REM *****************************
+500 REM BIN TO INT
+501 REM CONV CONTENTS OF A$ TO A
+502 REM AND B$ TO B
+503 REM *****************************
+505 P=1:A=B=0
+510 FOR I=1 TO 8
+520 A=A+(VAL(A$(I,I))=1)*P
+521 B=B+(VAL(B$(I,I))=1)*P
+522 R=R+(VAL(R$(I,I))=1)*P
+529 P=P*2
+530 NEXT I
+550 RETURN
+1000 REM ****************************
+1001 REM DEZ TO BIN
+1002 REM INT A AND B WITH THE
+1003 REM # TO CONVERT.
+1004 REM RESULT WILL BE SAVED TO
+1005 REM A$ AND B$
+1006 REM ****************************
+1091 FOR I=1 TO 8
+1100 A$(I,I)=STR$(A-INT(A/2)*2)
+1101 B$(I,I)=STR$(B-INT(B/2)*2)
+1200 A=INT(A/2):B=INT(B/2)
+1300 NEXT I
+1400 RETURN
+3000 REM ****************************
+4000 REM RETROZOCK  01/2023
+5000 REM ****************************
